@@ -1,0 +1,19 @@
+{
+  "todos": [
+    {
+      "title": "First Todo (creating the main structure)"
+    },
+    {
+      "title": "Second Todo (making mobile view)"
+    },
+    {
+      "title": "Third Todo (making desktop view)"
+    },
+    {
+      "title": "Fourth Todo (Starting CRUD operations - create/show)"
+    },
+    {
+      "title": "Fifth Todo (Complete the rest of the CRUD - update/delete)"
+    }
+  ]
+}
