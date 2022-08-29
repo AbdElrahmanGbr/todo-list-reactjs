@@ -10,6 +10,21 @@ function Todo() {
     const [error, setError] = useState([]);
     const [newTodo, setNewTodo] = useState('');
 
+    const handleCheck = async (id) =>{
+        const listTodos = todoList.map((todo)=> todo.id === id ? {...todo, checked: !todo.checked} : todo);
+        setTodoList(listTodos);
+        const myTodo = listTodos.filter((todo) => todo.id === id);
+        const updateOptions = {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({checked: myTodo[0].checked})
+        };
+        const requestUrl = `${API_URL}/${id}`;
+        const result = await apiRequest(requestUrl, updateOptions);
+        if (result) setError(result);
+    }
     const addTodo = async (title) => {
         const id = todoList.length ? todoList[todoList.length - 1].id + 1 : 1;
         const myNewTodo = {id, title};
@@ -68,7 +83,8 @@ function Todo() {
                     {todoList && todoList.map((todo, id) => {
                         return (
                             <div key={id}>
-                                <div className={'text-2xl p-4 bg-gray-800 text-white border-t'}>{todo.title}</div>
+                                <input type={'checkbox'} checked={todo.checked} onChange={()=>handleCheck(todo.id)}/>
+                                <div className={`text-2xl p-4 bg-gray-800 text-white border-t ${todo.checked ? 'line-through' : null}`} onDoubleClick={()=>handleCheck(todo.id)}>{todo.title}</div>
                             </div>
                         )
                     })

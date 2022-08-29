@@ -19,19 +19,38 @@
   "todo-list": [
     {
       "id": 1,
+      "checked": true,
       "title": "Add header with (dark mode for backgrounds)"
     },
     {
       "id": 2,
+      "checked": true,
       "title": "Try Making it responsive"
     },
     {
       "id": 3,
+      "checked": true,
       "title": "Main Todo List structure"
     },
     {
       "id": 4,
+      "checked": false,
       "title": "testing add"
+    },
+    {
+      "id": 5,
+      "checked": false,
+      "title": "fsafasf"
+    },
+    {
+      "id": 6,
+      "checked": false,
+      "title": "testing add 5"
+    },
+    {
+      "id": 7,
+      "checked": false,
+      "title": "adding todo"
     }
   ]
 }
