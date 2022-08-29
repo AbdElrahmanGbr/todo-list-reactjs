@@ -17,8 +17,21 @@
     "name": "typicode"
   },
   "todo-list": [
-    { "title": "Add header with (dark mode for backgrounds)"},
-    { "title": "Try Making it responsive"},
-    { "title": "Main Todo List structure"}
+    {
+      "id": 1,
+      "title": "Add header with (dark mode for backgrounds)"
+    },
+    {
+      "id": 2,
+      "title": "Try Making it responsive"
+    },
+    {
+      "id": 3,
+      "title": "Main Todo List structure"
+    },
+    {
+      "id": 4,
+      "title": "testing add"
+    }
   ]
 }
