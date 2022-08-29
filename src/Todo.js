@@ -2,6 +2,8 @@ import Header from "./Header";
 import {useEffect, useState} from "react";
 import apiRequest from "./apiRequest";
 import AddTodo from "./AddTodo";
+import crossIcon from "./images/icon-cross.svg"
+import checkIcon from "./images/icon-check.svg"
 
 function Todo() {
     const API_URL = "http://localhost:3001/todo-list";
@@ -10,8 +12,8 @@ function Todo() {
     const [error, setError] = useState([]);
     const [newTodo, setNewTodo] = useState('');
 
-    const handleCheck = async (id) =>{
-        const listTodos = todoList.map((todo)=> todo.id === id ? {...todo, checked: !todo.checked} : todo);
+    const handleCheck = async (id) => {
+        const listTodos = todoList.map((todo) => todo.id === id ? {...todo, checked: !todo.checked} : todo);
         setTodoList(listTodos);
         const myTodo = listTodos.filter((todo) => todo.id === id);
         const updateOptions = {
@@ -43,11 +45,20 @@ function Todo() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if(!newTodo) return;
+        if (!newTodo) return;
         console.log(newTodo);
         addTodo(newTodo);
         setNewTodo('');
         console.log('submitted');
+    }
+
+    const handleDelete = async (id) => {
+        const listTodos = todoList.filter((todo) => (todo.id !== id));
+        setTodoList(listTodos);
+        const deleteOptions = {method: 'DELETE'};
+        const requestUrl = `${API_URL}/${id}`;
+        const result = await apiRequest(requestUrl, deleteOptions);
+        if (result) setError(result);
     }
 
     useEffect(() => {
@@ -77,21 +88,27 @@ function Todo() {
             <div className={'flex flex-col'}>
                 <div className={'-mt-56 m-auto lg:w-1/2'}>
                     <h1 className={'font-bold text-5xl text-white'}>TODO</h1>
-                    <AddTodo newTodo={newTodo} setNewTodo={setNewTodo} handleSubmit={handleSubmit} />
+                    <AddTodo newTodo={newTodo} setNewTodo={setNewTodo} handleSubmit={handleSubmit}/>
                     {error && <div className={'font-bold text-white'}>{error}</div>}
                     {isPending && <div className={'text-white'}>Loading Data...</div>}
                     {todoList && todoList.map((todo, id) => {
                         return (
                             <div key={id}>
-                                <input type={'checkbox'} checked={todo.checked} onChange={()=>handleCheck(todo.id)}/>
-                                <div className={`text-2xl p-4 bg-gray-800 text-white border-t ${todo.checked ? 'line-through' : null}`} onDoubleClick={()=>handleCheck(todo.id)}>{todo.title}</div>
+                                <div
+                                    className={`flex justify-between text-2xl p-4 bg-gray-800 text-white border-t ${todo.checked ? 'line-through' : null}`}
+                                    onDoubleClick={() => handleCheck(todo.id)}>
+                                    <input type={'checkbox'} checked={todo.checked}
+                                           onChange={() => handleCheck(todo.id)}/>
+                                    {todo.title}
+                                    <img className={''} src={crossIcon} alt={'crossIcon'}
+                                         onClick={() => handleDelete(todo.id)}/>
+                                </div>
                             </div>
                         )
                     })
                     }
                 </div>
             </div>
-
         </>
     );
 }
