@@ -3,7 +3,8 @@ import {useEffect, useState} from "react";
 import apiRequest from "./apiRequest";
 import AddTodo from "./AddTodo";
 import crossIcon from "./images/icon-cross.svg"
-import checkIcon from "./images/icon-check.svg"
+import Toggle from "./toggle";
+import FilterTodo from "./FilterTodo";
 
 function Todo() {
     const API_URL = "http://localhost:3001/todo-list";
@@ -11,17 +12,25 @@ function Todo() {
     const [isPending, setIsPending] = useState(true);
     const [error, setError] = useState([]);
     const [newTodo, setNewTodo] = useState('');
+    const [filteredTodos, updateFilteredTodos] = useState('all');
+    let filteredTodoList = todoList.filter((todo)=>{
+        if(filteredTodos === 'active'){
+            return todo.checked === false;
+        }else if(filteredTodos === 'completed'){
+            return todo.checked === true;
+        }else{
+            return todo;
+        }
+    })
 
     const handleCheck = async (id) => {
         const listTodos = todoList.map((todo) => todo.id === id ? {...todo, checked: !todo.checked} : todo);
         setTodoList(listTodos);
         const myTodo = listTodos.filter((todo) => todo.id === id);
         const updateOptions = {
-            method: 'PATCH',
-            headers: {
+            method: 'PATCH', headers: {
                 'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({checked: myTodo[0].checked})
+            }, body: JSON.stringify({checked: myTodo[0].checked})
         };
         const requestUrl = `${API_URL}/${id}`;
         const result = await apiRequest(requestUrl, updateOptions);
@@ -33,11 +42,9 @@ function Todo() {
         const listTodos = [...todoList, myNewTodo];
         setTodoList(listTodos);
         const postOptions = {
-            method: 'POST',
-            headers: {
+            method: 'POST', headers: {
                 'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(myNewTodo)
+            }, body: JSON.stringify(myNewTodo)
         }
         const result = await apiRequest(API_URL, postOptions);
         if (result) setError(result);
@@ -82,20 +89,24 @@ function Todo() {
     }, []);
     console.log(todoList);
 
-    return (
-        <>
+    function onFilterValueSelected(filterValue){
+        updateFilteredTodos(filterValue)
+    }
+    return (<>
             <Header/>
             <div className={'flex flex-col'}>
                 <div className={'-mt-56 m-auto lg:w-1/2'}>
-                    <h1 className={'font-bold text-5xl text-white'}>TODO</h1>
+                    <div className={'flex justify-between'}>
+                        <h1 className={'font-bold text-5xl text-white'}>TODO</h1>
+                        <Toggle/>
+                    </div>
                     <AddTodo newTodo={newTodo} setNewTodo={setNewTodo} handleSubmit={handleSubmit}/>
-                    {error && <div className={'font-bold text-white'}>{error}</div>}
-                    {isPending && <div className={'text-white'}>Loading Data...</div>}
-                    {todoList && todoList.map((todo, id) => {
-                        return (
-                            <div key={id}>
+                    {error && <div className={'font-bold dark:text-white'}>{error}</div>}
+                    {isPending && <div className={'dark:text-white'}>Loading Data...</div>}
+                    {filteredTodoList && filteredTodoList.map((todo, id) => {
+                        return (<div key={id}>
                                 <div
-                                    className={`flex justify-between text-2xl p-4 bg-gray-800 text-white border-t ${todo.checked ? 'line-through' : null}`}
+                                    className={`flex justify-between text-2xl p-4 dark:bg-gray-800 dark:text-white border-t ${todo.checked ? 'line-through' : null}`}
                                     onDoubleClick={() => handleCheck(todo.id)}>
                                     <input type={'checkbox'} checked={todo.checked}
                                            onChange={() => handleCheck(todo.id)}/>
@@ -103,14 +114,12 @@ function Todo() {
                                     <img className={''} src={crossIcon} alt={'crossIcon'}
                                          onClick={() => handleDelete(todo.id)}/>
                                 </div>
-                            </div>
-                        )
-                    })
-                    }
+                            </div>)
+                    })}
+                    <FilterTodo filterValueSelected={onFilterValueSelected}/>
                 </div>
             </div>
-        </>
-    );
+        </>);
 }
 
 export default Todo;

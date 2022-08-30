@@ -24,27 +24,25 @@
     },
     {
       "id": 3,
-      "checked": false,
+      "checked": true,
       "title": "Main Todo List structure"
     },
     {
-      "id": 5,
-      "checked": false,
-      "title": "fsafasf"
-    },
-    {
-      "id": 6,
-      "checked": false,
-      "title": "testing add 5"
-    },
-    {
-      "id": 7,
-      "checked": false,
-      "title": "adding todo"
-    },
-    {
       "id": 8,
-      "title": "testing add 5"
+      "title": "testing add 5",
+      "checked": true
+    },
+    {
+      "id": 9,
+      "title": "fsafsafasf"
+    },
+    {
+      "id": 10,
+      "title": "fsafsafasf"
+    },
+    {
+      "id": 11,
+      "title": "fasfasf"
     }
   ]
 }
