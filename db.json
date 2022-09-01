@@ -24,25 +24,23 @@
     },
     {
       "id": 3,
-      "checked": true,
+      "checked": false,
       "title": "Main Todo List structure"
     },
     {
-      "id": 8,
-      "title": "testing add 5",
+      "id": 17,
+      "title": "testing add hlbessa",
       "checked": true
     },
     {
-      "id": 9,
-      "title": "fsafsafasf"
+      "id": 18,
+      "title": "lorem",
+      "checked": false
     },
     {
-      "id": 10,
-      "title": "fsafsafasf"
-    },
-    {
-      "id": 11,
-      "title": "fasfasf"
+      "id": 19,
+      "title": "styling and refactoring",
+      "checked": false
     }
   ]
 }
