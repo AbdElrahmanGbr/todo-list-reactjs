@@ -1,46 +1,49 @@
 {
-  "posts": [
-    {
-      "id": 1,
-      "title": "json-server",
-      "author": "typicode"
-    }
-  ],
-  "comments": [
-    {
-      "id": 1,
-      "body": "some comment",
-      "postId": 1
-    }
-  ],
-  "profile": {
-    "name": "typicode"
-  },
   "todo-list": [
     {
-      "id": 3,
+      "id": 1,
       "checked": true,
-      "title": "Main Todo List structure"
+      "title": "Create react app"
     },
     {
-      "id": 17,
-      "title": "testing add hlbessa",
+      "id": 2,
+      "title": "Add tailwind css package",
       "checked": false
     },
     {
-      "id": 18,
-      "title": "lorem",
+      "id": 3,
+      "title": "Create the main todo list structure",
       "checked": false
     },
     {
-      "id": 19,
-      "title": "styling and refactoring",
+      "id": 4,
+      "title": "Start with CRUD operations",
       "checked": false
     },
     {
-      "id": 20,
-      "title": "testing add",
+      "id": 5,
+      "title": "Setup Json server",
       "checked": true
+    },
+    {
+      "id": 6,
+      "title": "Implement CRUD on it",
+      "checked": true
+    },
+    {
+      "id": 7,
+      "title": "Refactor Styles and dark mode",
+      "checked": false
+    },
+    {
+      "id": 8,
+      "title": "Implement drag and drop using (react beautiful dnd)",
+      "checked": false
+    },
+    {
+      "id": 9,
+      "title": "Edit Json for deployment",
+      "checked": false
     }
   ]
 }

@@ -10,7 +10,7 @@ import React from "react";
 import {DragDropContext, Draggable, Droppable} from 'react-beautiful-dnd'
 
 function Todo() {
-    const API_URL = "http://localhost:3001/todo-list";
+    const API_URL = "http://localhost:8000/todo-list";
     const [todoList, setTodoList] = useState([]);
     const [isPending, setIsPending] = useState(true);
     const [error, setError] = useState([]);
@@ -126,8 +126,8 @@ function Todo() {
                     <Toggle/>
                 </div>
                 <AddTodo newTodo={newTodo} setNewTodo={setNewTodo} handleSubmit={handleSubmit}/>
-                {/*{error && <div className={'font-bold dark:text-todosTextColor-dark'}>{error}</div>}*/}
-                {/*{isPending && <div className={'dark:text-todosTextColor-dark'}>Loading Data...</div>}*/}
+                {error && <div className={'font-bold dark:text-todosTextColor-dark'}>{error}</div>}
+                {isPending && <div className={'dark:text-todosTextColor-dark'}>Loading Data...</div>}
                 <DragDropContext onDragEnd={handleDrop}>
                     <Droppable droppableId="droppable">
                         {(provided) => (
