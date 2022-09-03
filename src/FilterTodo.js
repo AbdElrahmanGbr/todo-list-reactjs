@@ -3,28 +3,31 @@ let FilterTodo = (props) => {
     return (
         <>
             <div
-                className={'border-gray-600 rounded-xl md:flex lg:flex xl:flex 2xl:flex hidden text-2xl p-4 dark:bg-gray-800 dark:text-white border-t border-gray-600 flex justify-between text-base font-bold'}>
-                <span className={'text-gray-500 font-medium ml-5'}>{props.todoList.length} items left</span>
+                className={'dark:bg-todoBg-dark bg-todoBg-light border-t dark:border-borderColor rounded-b-xl lg:flex xl:flex 2xl:flex hidden py-4 dark:text-filterText-dark text-filterText-light flex justify-between'}>
+                <span className={'ml-5 dark:text-filterText-dark text-filterText-light'}>{props.todoList.length} items left</span>
                 <div className={'space-x-3'}>
-                    <button onClick={() => props.filterValueSelected('all')}>All</button>
-                    <button onClick={() => props.filterValueSelected('active')}>Active</button>
-                    <button onClick={() => props.filterValueSelected('completed')}>Completed</button>
+                    <button className="text-allBtn hover:cursor-pointer" onClick={() => props.filterValueSelected('all')}>All</button>
+                    <button className={'filterButton'} onClick={() => props.filterValueSelected('active')}>Active</button>
+                    <button className={'filterButton'} onClick={() => props.filterValueSelected('completed')}>Completed</button>
                 </div>
-                <button className={'mr-5'} onClick={props.handleClearCompleted}>Clear Completed</button>
+                <button className={'mr-5 filterButton'} onClick={props.handleClearCompleted}>Clear Completed</button>
             </div>
 
-            <div className={'md:hidden lg:hidden sm:block'}>
+            <div className={'md:block lg:hidden sm:block'}>
                 <div
-                    className={'border-gray-600 rounded-xl flex text-2xl p-4 dark:bg-gray-800 dark:text-white border-t border-gray-600 justify-around text-base font-bold'}>
-                    <span className={'text-gray-500 font-medium ml-5'}>{props.todoList.length} items left</span>
-                    <button className={'mr-5'} onClick={props.handleClearCompleted}>Clear Completed</button>
+                    className={'dark:bg-todoBg-dark bg-todoBg-light border-t dark:border-borderColor rounded-b-xl flex p-4 dark:bg-todoBg-dark dark:text-filterText-dark text-filterText-light  justify-around'}>
+                    <span className={'font-thin ml-5'}>{props.todoList.length} items left</span>
+                    <button className={'mr-5 filterButton'} onClick={props.handleClearCompleted}>Clear Completed</button>
                 </div>
                 <div
-                    className={'border-gray-600 rounded-xl flex text-2xl p-4 dark:bg-gray-800 dark:text-white border-t border-gray-600 justify-center text-base font-bold space-x-5'}>
-                    <button onClick={() => props.filterValueSelected('all')}>All</button>
-                    <button onClick={() => props.filterValueSelected('active')}>Active</button>
-                    <button onClick={() => props.filterValueSelected('completed')}>Completed</button>
+                    className={'font-semiBold mt-4 dark:bg-todoBg-dark bg-todoBg-light dark:border-borderColor border-t rounded-xl flex text-2.5xl p-4 dark:text-filterText-dark text-filterText-light justify-center space-x-5'}>
+                    <button className="text-allBtn hover:cursor-pointer" onClick={() => props.filterValueSelected('all')}>All</button>
+                    <button className={'filterButton'} onClick={() => props.filterValueSelected('active')}>Active</button>
+                    <button className={'filterButton'} onClick={() => props.filterValueSelected('completed')}>Completed</button>
                 </div>
+            </div>
+            <div className={'m-auto mt-10 dark:text-filterText-dark text-filterText-light'}>
+                Drag and drop to reorder list
             </div>
 
         </>

@@ -18,19 +18,14 @@
   },
   "todo-list": [
     {
-      "id": 1,
-      "checked": false,
-      "title": "Add header with (dark mode for backgrounds)"
-    },
-    {
       "id": 3,
-      "checked": false,
+      "checked": true,
       "title": "Main Todo List structure"
     },
     {
       "id": 17,
       "title": "testing add hlbessa",
-      "checked": true
+      "checked": false
     },
     {
       "id": 18,
@@ -41,6 +36,11 @@
       "id": 19,
       "title": "styling and refactoring",
       "checked": false
+    },
+    {
+      "id": 20,
+      "title": "testing add",
+      "checked": true
     }
   ]
 }

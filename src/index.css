@@ -1,36 +1,17 @@
+@import url("https://fonts.google.com/specimen/Josefin+Sans");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/*#header-img {*/
-
-/*    height: 300px;*/
-/*    width: 100%;*/
-/*    background-size: cover;*/
-/*    background-position: center;*/
-/*}*/
-
-/*@media screen and (max-width: 767px) {*/
-/*    #header-img{*/
-/*        background-image: url('./images/bg-mobile-dark.jpg');*/
-/*    }*/
-/*}*/
-
-/*@media screen and (min-width: 768px) {*/
-/*    #header-img{*/
-/*        background-image: url('./images/bg-mobile-dark.jpg');*/
-/*    }*/
-/*}*/
-/*@media (min-width: 992px) {*/
-/*    #header-img{*/
-/*        background-image: url('./images/bg-desktop-dark.jpg');*/
-/*    }*/
-/*}*/
-/*@media (min-width: 1200px) {*/
-/*    #header-img{*/
-/*        background-image: url('./images/bg-desktop-dark.jpg');*/
-/*    }*/
-/*}*/
 body{
+    @apply dark:bg-containerBg-dark text-lg;
+}
+
+.filterButton
+{
+    @apply dark:hover:text-filterText-darkHover hover:text-filterText-lightHover hover:cursor-pointer;
+}
+
+.footer{
 
 }

@@ -7,6 +7,7 @@ import Toggle from "./toggle";
 import FilterTodo from "./FilterTodo";
 import checkIcon from "./images/icon-check.svg"
 import React from "react";
+import {DragDropContext, Draggable, Droppable} from 'react-beautiful-dnd'
 
 function Todo() {
     const API_URL = "http://localhost:3001/todo-list";
@@ -104,30 +105,47 @@ function Todo() {
         const result = await apiRequest(requestUrl, deleteOptions);
         if (result) setError(result);
     }
-    return (<>
+    // Function to update list on drop
+    const handleDrop = (droppedItem) => {
+        // Ignore drop outside droppable container
+        if (!droppedItem.destination) return;
+        const updatedList = [...todoList];
+        // Remove dragged item
+        const [reorderedItem] = updatedList.splice(droppedItem.source.index, 1);
+        // Add dropped item
+        updatedList.splice(droppedItem.destination.index, 0, reorderedItem);
+        // Update State
+        setTodoList(updatedList);
+    };
+    return (<div className={'font-customSans text-lg dark:bg-containerBg-dark bg-containerBg-light'}>
         <Header/>
-        <div className={'flex flex-col'}>
-            <div className={'-mt-56 m-auto lg:w-1/2'}>
-                <div className={'flex justify-between'}>
-                    <h1 className={'font-bold text-5xl text-white'}>TODO</h1>
+        <div className={'min-h-screen absolute top-16 w-full pt-4 drop-shadow-2xl'}>
+            <div className={'flex flex-col m-auto lg:w-5/12 md:w-6/12 sm:w-7/12 w-8/12 h-full'}>
+                <div className={'flex justify-between bg-transparent'}>
+                    <h1 className={'font-bold text-white text-4xl'}>T O D O</h1>
                     <Toggle/>
                 </div>
                 <AddTodo newTodo={newTodo} setNewTodo={setNewTodo} handleSubmit={handleSubmit}/>
-                {error && <div className={'font-bold dark:text-white'}>{error}</div>}
-                {isPending && <div className={'dark:text-white'}>Loading Data...</div>}
-                            <div className={'dark:border-2 border-gray-900 rounded-lg'}>
-                                {filteredTodos && filteredTodos.map((todo, id) => {
-                                    return (<div key={id}>
-                                    <div
-                                            className={`group bg-white flex justify-left text-2xl p-4 dark:bg-gray-800 dark:text-white border-t border-gray-600 ${todo.checked ? 'line-through' : null}`}
-                                            onDoubleClick={() => handleCheck(todo.id)}>
-                                            {todo.checked ? <div className="block">
+                {/*{error && <div className={'font-bold dark:text-todosTextColor-dark'}>{error}</div>}*/}
+                {/*{isPending && <div className={'dark:text-todosTextColor-dark'}>Loading Data...</div>}*/}
+                <DragDropContext onDragEnd={handleDrop}>
+                    <Droppable droppableId="droppable">
+                        {(provided) => (
+                            <div {...provided.droppableProps}
+                                 ref={provided.innerRef}>
+                                {filteredTodos && filteredTodos.map((todo, index) => {
+                                    return (<Draggable key={todo.id} draggableId={todo.id.toString()} index={index}>
+                                        {(provided) => (<div {...provided.draggableProps} {...provided.dragHandleProps}
+                                                             ref={provided.innerRef}
+                                                             className={`first:rounded-t-lg dark:bg-todoBg-dark dark:text-todosText-dark bg-todoBg-light  text-todosText-light hover:dark:text-filterText-darkHover hover:text-filterText-lightHover group bg-white flex justify-left p-4  border-t dark:border-borderColor ${todo.checked ? 'line-through dark:text-linedText-dark text-linedText-light' : null}`}
+                                                             onDoubleClick={() => handleCheck(todo.id)}>
+                                            {todo.checked ? <div className="grid place-items-center">
                                                 <img src={checkIcon}
-                                                     className="p-1 w-7 h-7 rounded-full bg-gradient-to-br from-emerald-500 via-cyan-300 to-fuchsia-800"
+                                                     className="rounded-full p-1.5 w-5 h-5 bg-gradient-to-tl from-linear-gradient-1 to-linear-gradient-2 hover:cursor-pointer"
                                                      alt={'check icon'} onClick={() => handleCheck(todo.id)}/>
                                             </div> : <div className="block">
                                                 <input type="checkbox"
-                                                       className="p-1 dark:bg-gray-800 w-7 h-7 rounded-full hover:border-purple-700"
+                                                       className="p-1 dark:bg-todoBg-dark bg-todoBg-light w-5 h-5 rounded-full hover:border-purple-700 hover:cursor-pointer"
                                                        checked={todo.checked}
                                                        onChange={() => handleCheck(todo.id)}/>
                                             </div>}
@@ -135,18 +153,22 @@ function Todo() {
                                                 {todo.title}
                                             </p>
                                             <div className={'ml-auto'}>
-                                                <img className={'w-6 h-6 hidden group-hover:inline-flex'}
+                                                <img className={'w-5 h-5 hidden group-hover:inline-flex'}
                                                      src={crossIcon} alt={'crossIcon'}
                                                      onClick={() => handleDelete(todo.id)}/>
                                             </div>
-
-                                        </div>
-                                    </div>)
+                                        </div>)}
+                                    </Draggable>);
                                 })}
-                    </div>
-                            <FilterTodo filterValueSelected={onFilterValueSelected} todoList={todoList} handleClearCompleted={handleClearCompleted}/>
-                            </div>
-                            </div>
-                            </>);}
+                                {provided.placeholder}
+                            </div>)}
+                    </Droppable>
+                </DragDropContext>
+                <FilterTodo filterValueSelected={onFilterValueSelected} todoList={todoList}
+                            handleClearCompleted={handleClearCompleted}/>
+            </div>
+        </div>
+    </div>);
+}
 
-                        export default Todo;
+export default Todo;
