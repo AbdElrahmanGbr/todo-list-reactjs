@@ -10,7 +10,7 @@ import React from "react";
 import {DragDropContext, Draggable, Droppable} from 'react-beautiful-dnd'
 
 function Todo() {
-    const API_URL = "http://localhost:8000/todo-list";
+    const API_URL = "https://todo-list-gbr.herokuapp.com/todo-list";
     const [todoList, setTodoList] = useState([]);
     const [isPending, setIsPending] = useState(true);
     const [error, setError] = useState([]);
